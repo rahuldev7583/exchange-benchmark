@@ -1,0 +1,17 @@
+[package]
+name = "layer1-rust"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+matching-engine-rust = { path = "../../engines/matching-engine-rust" }
+serde_json = "1.0"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+debug = false
+
+[workspace]

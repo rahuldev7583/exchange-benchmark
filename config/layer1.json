@@ -1,0 +1,30 @@
+{
+  "symbol": "BTC_USDC",
+  "mid_price": 65000,
+  "levels": 100,
+  "qty_unit": 1000000000000000,
+  "scenarios": ["limit_rest", "limit_cross_1", "limit_sweep", "market_sweep", "cancel"],
+  "profiles": {
+    "smoke": {
+      "book_sizes": [1000],
+      "max_ops_per_round": 100,
+      "target_samples": 2000,
+      "warmup_rounds": 2,
+      "cell_budget_seconds": 20
+    },
+    "default": {
+      "book_sizes": [1000, 10000],
+      "max_ops_per_round": 500,
+      "target_samples": 50000,
+      "warmup_rounds": 5,
+      "cell_budget_seconds": 90
+    },
+    "full": {
+      "book_sizes": [1000, 10000, 100000],
+      "max_ops_per_round": 1000,
+      "target_samples": 200000,
+      "warmup_rounds": 10,
+      "cell_budget_seconds": 180
+    }
+  }
+}
