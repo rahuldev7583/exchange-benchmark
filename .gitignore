@@ -1,5 +1,32 @@
 target/
 node_modules/
+
+# Ignore generated benchmark results
 results/*
 !results/.gitkeep
 !results/published/
+
+# Allow published reports and their parent directories
+results/published/*
+!results/published/*/
+results/published/*/*
+!results/published/*/*/
+!results/published/*/*/report.md
+!results/published/*/*/summary.csvtarget/
+node_modules/
+results/*
+!results/.gitkeep
+!results/published/
+target/
+node_modules/
+
+# Ignore generated benchmark runs by default
+results/*
+!results/.gitkeep
+!results/published/
+
+# Track published benchmark reports
+results/published/*
+!results/published/**/*.md
+!results/published/**/*.csv
+!results/published/**/*.json
