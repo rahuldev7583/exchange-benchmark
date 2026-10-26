@@ -1,0 +1,8 @@
+{
+  "name": "layer2-service",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "redis": "^5.12.1"
+  }
+}

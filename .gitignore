@@ -30,3 +30,5 @@ results/published/*
 !results/published/**/*.md
 !results/published/**/*.csv
 !results/published/**/*.json
+.env
+layer2-service/node_modules/

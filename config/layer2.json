@@ -1,0 +1,26 @@
+{
+  "symbol": "BTC_USDC",
+  "mid_price": 65000,
+  "levels": 100,
+  "qty_unit": 1000000000000000,
+  "profiles": {
+    "smoke": {
+      "seed_orders_per_side": 100,
+      "floor_samples": 50,
+      "idle_samples": 60,
+      "warmup_requests": 20,
+      "rates": [20],
+      "duration_seconds": 5,
+      "drain_timeout_seconds": 10
+    },
+    "full": {
+      "seed_orders_per_side": 1000,
+      "floor_samples": 1000,
+      "idle_samples": 2000,
+      "warmup_requests": 200,
+      "rates": [50, 100, 200, 400, 800, 1600],
+      "duration_seconds": 30,
+      "drain_timeout_seconds": 20
+    }
+  }
+}
