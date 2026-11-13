@@ -1,4 +1,4 @@
-.PHONY: layer2-smoke layer2-full layer2-report layer2-clean engine-setup-rust engine-setup-ts engine-rust engine-ts setup layer1 layer1-smoke layer1-full layer1-rust layer1-ts report update-engines
+.PHONY: layer2-smoke layer2-full layer2-deep layer2-report layer2-clean engine-setup-rust engine-setup-ts engine-rust engine-ts setup layer1 layer1-smoke layer1-full layer1-rust layer1-ts report update-engines
 
 setup:
 	./scripts/setup.sh
@@ -46,6 +46,9 @@ layer2-smoke:
 
 layer2-full:
 	./scripts/run-layer2.sh $(ENGINE) full
+
+layer2-deep:
+	./scripts/run-layer2.sh $(ENGINE) deep
 
 layer2-report:
 	bun scripts/report-layer2.ts --latest full

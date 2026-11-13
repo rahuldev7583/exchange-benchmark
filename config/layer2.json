@@ -1,26 +1,57 @@
 {
-  "symbol": "BTC_USDC",
+  "symbol_prefix": "L2",
   "mid_price": 65000,
   "levels": 100,
   "qty_unit": 1000000000000000,
+  "scenarios": ["limit_rest", "limit_cross_1", "limit_sweep", "market_sweep", "cancel"],
   "profiles": {
     "smoke": {
-      "seed_orders_per_side": 100,
+      "book_sizes": [1000],
+      "max_ops_per_round": 50,
+      "target_samples": 200,
+      "warmup_rounds": 1,
+      "cell_budget_seconds": 60,
       "floor_samples": 50,
-      "idle_samples": 60,
-      "warmup_requests": 20,
-      "rates": [20],
-      "duration_seconds": 5,
-      "drain_timeout_seconds": 10
+      "load": {
+        "book_sizes": [1000],
+        "idle_samples": 60,
+        "warmup_requests": 20,
+        "rates": [20],
+        "duration_seconds": 5,
+        "drain_timeout_seconds": 10
+      }
     },
     "full": {
-      "seed_orders_per_side": 1000,
+      "book_sizes": [1000, 10000],
+      "max_ops_per_round": 200,
+      "target_samples": 5000,
+      "warmup_rounds": 3,
+      "cell_budget_seconds": 180,
       "floor_samples": 1000,
-      "idle_samples": 2000,
-      "warmup_requests": 200,
-      "rates": [50, 100, 200, 400, 800, 1600],
-      "duration_seconds": 30,
-      "drain_timeout_seconds": 20
+      "load": {
+        "book_sizes": [1000, 10000],
+        "idle_samples": 2000,
+        "warmup_requests": 200,
+        "rates": [50, 100, 200, 400, 800, 1600],
+        "duration_seconds": 30,
+        "drain_timeout_seconds": 20
+      }
+    },
+    "deep": {
+      "book_sizes": [1000, 10000, 100000],
+      "max_ops_per_round": 200,
+      "target_samples": 5000,
+      "warmup_rounds": 3,
+      "cell_budget_seconds": 180,
+      "floor_samples": 1000,
+      "load": {
+        "book_sizes": [1000, 10000, 100000],
+        "idle_samples": 2000,
+        "warmup_requests": 200,
+        "rates": [50, 100, 200, 400, 800, 1600],
+        "duration_seconds": 30,
+        "drain_timeout_seconds": 20
+      }
     }
   }
 }

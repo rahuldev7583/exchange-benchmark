@@ -8,7 +8,8 @@ cd "$(dirname "$0")/.."
 if [[ -f .env ]]; then set -a; source .env; set +a; fi
 : "${REDIS_URL:?REDIS_URL is not set (put it in .env, see .env.example)}"
 
-DEFAULT_FIXTURE='{"markets":[{"symbol":"BTC_USDC"}]}'
+# One market per layer 2 book size (config/layer2.json), identical for both engines.
+DEFAULT_FIXTURE="$(bun scripts/l2-fixture.ts)"
 export MARKETS_FIXTURE="${MARKETS_FIXTURE:-$DEFAULT_FIXTURE}"
 export VERBOSE_LOGGING=false
 export LOG_LEVEL=info

@@ -12,7 +12,7 @@ Benchmark of two matching engines on identical workloads:
 | Layer | Question | Status |
 |---|---|---|
 | **1. Orderbook** | Given a prepared command and an existing orderbook, how long does the in-memory operation take? | implemented |
-| **2. Engine service** | How long does an order take through the queue, engine and result channel? | implemented ([docs/LAYER2.md](docs/LAYER2.md)) |
+| **2. Engine service** | How long does the same Layer 1 scenario take through the Redis queue, engine and result channel? | implemented ([docs/LAYER2.md](docs/LAYER2.md)) |
 | 3. Full exchange | How long until a client receives the matching result through the backend? | planned |
 
 Layer 1 includes matching, book mutation and result construction. It excludes Redis, JSON parsing, networking, authentication, database work and workload generation. It reports p50, p90, p99, p99.9, max and throughput per scenario and book depth. Details: [docs/METHODOLOGY.md](docs/METHODOLOGY.md).
@@ -117,7 +117,7 @@ make layer2-report
 make layer2-clean           # optional: delete unconsumed settlement/risk queues in Redis
 ```
 
-Output: `results/layer2-<ts>-<engine>-<profile>/` (`layer2.json`, `report.md`, `env.json`) and `results/layer2-compare-full-<ts>/report.md` with p50, p95 and p99 end-to-end, idle (service) time, transport floor and queue wait per arrival rate. A run fails (non-zero exit) if the engine answers with an unexpected status or the book is not empty at start.
+Output: `results/layer2-<ts>-<engine>-<profile>/` (`layer2.json`, `report.md`, `env.json`) and `results/layer2-compare-<profile>-<ts>/report.md`. Layer 2 runs the five Layer 1 scenarios (`limit_rest`, `limit_cross_1`, `limit_sweep`, `market_sweep`, `cancel`) at each book size over Redis, then an open-loop load test per book size. The comparison report has a parity gate (statuses, fills, quantity, notional, and the number of settlement/risk messages each engine wrote) and exits with code 2 if the engines did different work. A run fails (non-zero exit) if the engine answers with an unexpected status or a book is not empty at start. Profiles: `smoke`, `full` (1k and 10k books), `deep` (adds 100k, very slow to seed through the TS engine).
 
 Optional: `ENGINE_CPU=2 make engine-rust` pins the engine; `ENGINE_HOST_DESC`, `LOADGEN_HOST_DESC` and `REDIS_DESC` in `.env` are recorded in the report. Edit [config/layer2.json](config/layer2.json) to change rates or durations. Check your Upstash plan limits first (see [docs/LAYER2.md](docs/LAYER2.md)).
 

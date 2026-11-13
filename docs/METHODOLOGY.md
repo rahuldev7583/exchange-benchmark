@@ -47,13 +47,13 @@ No randomness. `MID=65000`, `L=100` levels, `U=1e15` base units (quantities must
 
 Within the first timed round each harness records status counts, total fills, total filled quantity and notional. The report fails (exit code 2) if status counts, fill count or total filled quantity differ between engines, because the engines would then be doing different work. Notional mismatch is reported as a warning.
 
-**Known deviation (matching-engine-rust @ a230af2):** `Fill.filled_quantity` carries the maker's full resting quantity rather than the matched quantity when the maker is larger than the taker's remainder. This is why notional differs. It violates ENGINE_CONTRACT §3 and does not affect the top-level `filled_quantity`.
+**Engine pins:** `matching-engine-rust` @ `37130f6` plus the local Layer 2 changes, `centralized-exchange` @ `7ff5ab3`. The earlier `Fill.filled_quantity` deviation (maker's full quantity reported instead of the matched quantity, which made fill notional differ) is fixed in `37130f6`, so notional is now part of the parity gate and matches.
 
 ## Known asymmetries (reported, not hidden)
 
 - TS `createOrder` builds `settlement` and `risk` side-effect payloads inside the timed call. They are not separable without editing the engine.
 - Rust is built with `lto=fat`, `codegen-units=1` through the harness crate. The engine's own `Cargo.toml` has no release tuning, so this is a best-case Rust build.
-- Rust `cancel_order` clones the whole `orders` map on every call (`self.orders.to_owned()`), so cancel is O(book) and slower than TS at these sizes. TS `cancelOrder` scans every order, also O(book). TS `createOrder` sorts the whole counterparty book on every call, so TS latency grows with depth.
+- Rust `cancel_order` is a hash lookup plus a scan of one price level. TS `cancelOrder` scans every order (O(book)). TS `createOrder` sorts the whole counterparty book on every call, so TS latency grows with depth.
 - Seeding writes directly into the books and does not go through `createOrder`, which is O(n^2) in TS.
 - The clock costs about 25 to 35 ns per timer call and is not subtracted. The median overhead is printed in the report.
 - Results measure a warm, single-threaded process. They say nothing about queueing, I/O or contention (layers 2 and 3).
