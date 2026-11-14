@@ -1,0 +1,2536 @@
+{
+  "layer": 2,
+  "engine": "rust",
+  "profile": "deep",
+  "run_id": "mwge3duzz50b",
+  "backend_id": "bench-mwge3duzz50b",
+  "started_at": "2026-11-14T12:36:16.247Z",
+  "host_desc": {
+    "engine": null,
+    "loadgen": null,
+    "redis": null
+  },
+  "config": {
+    "book_sizes": [
+      1000,
+      10000,
+      100000
+    ],
+    "max_ops_per_round": 200,
+    "target_samples": 5000,
+    "warmup_rounds": 3,
+    "cell_budget_seconds": 180,
+    "floor_samples": 1000,
+    "load": {
+      "book_sizes": [
+        1000,
+        10000,
+        100000
+      ],
+      "idle_samples": 2000,
+      "warmup_requests": 200,
+      "rates": [
+        50,
+        100,
+        200,
+        400,
+        800,
+        1600
+      ],
+      "duration_seconds": 30,
+      "drain_timeout_seconds": 20
+    }
+  },
+  "scenarios": [
+    "limit_rest",
+    "limit_cross_1",
+    "limit_sweep",
+    "market_sweep",
+    "cancel"
+  ],
+  "status": "ok",
+  "floor": {
+    "ping_rtt_ns": {
+      "count": 50,
+      "min": 123698,
+      "mean": 421951.66,
+      "p50": 468401,
+      "p90": 640391,
+      "p95": 665757,
+      "p99": 702830,
+      "p999": 702830,
+      "max": 702830
+    },
+    "echo_ns": {
+      "count": 1000,
+      "min": 265451,
+      "mean": 602201.641,
+      "p50": 579698,
+      "p90": 724552,
+      "p95": 879305,
+      "p99": 970095,
+      "p999": 1455972,
+      "max": 1455972
+    }
+  },
+  "cells": [
+    {
+      "scenario": "cancel",
+      "book_size_per_side": 1000,
+      "ops_per_round": 100,
+      "rounds": 50,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 202670,
+        "mean": 1088239.3154,
+        "p50": 1094337,
+        "p90": 1437158,
+        "p95": 1526584,
+        "p99": 1666237,
+        "p999": 1874028,
+        "max": 2525353
+      },
+      "lpush_ack_ns": {
+        "count": 4979,
+        "min": 81475,
+        "mean": 434450.744727857,
+        "p50": 463072,
+        "p90": 571298,
+        "p95": 605206,
+        "p99": 703514,
+        "p999": 1197154,
+        "max": 1710213
+      },
+      "ops_per_sec_closed_loop": 918.9155233124745,
+      "parity": {
+        "statuses": {
+          "cancelled": 100
+        },
+        "fills": 0,
+        "filled_quantity": "0",
+        "notional": "0"
+      },
+      "first_round_side_effects": {
+        "requests": 200,
+        "settlement_msgs": 200,
+        "risk_msgs": 200
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_rest",
+      "book_size_per_side": 1000,
+      "ops_per_round": 100,
+      "rounds": 50,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 217093,
+        "mean": 1102223.9054,
+        "p50": 1115981,
+        "p90": 1443069,
+        "p95": 1527751,
+        "p99": 1666440,
+        "p999": 2046285,
+        "max": 2478943
+      },
+      "lpush_ack_ns": {
+        "count": 4983,
+        "min": 85492,
+        "mean": 443249.4954846478,
+        "p50": 469046,
+        "p90": 578458,
+        "p95": 612987,
+        "p99": 722290,
+        "p999": 1159471,
+        "max": 2134828
+      },
+      "ops_per_sec_closed_loop": 907.2566790656725,
+      "parity": {
+        "statuses": {
+          "accepted": 100
+        },
+        "fills": 0,
+        "filled_quantity": "0",
+        "notional": "0"
+      },
+      "first_round_side_effects": {
+        "requests": 200,
+        "settlement_msgs": 200,
+        "risk_msgs": 200
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_cross_1",
+      "book_size_per_side": 1000,
+      "ops_per_round": 100,
+      "rounds": 50,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 209553,
+        "mean": 1024386.5696,
+        "p50": 1029718,
+        "p90": 1371514,
+        "p95": 1466430,
+        "p99": 1622429,
+        "p999": 1893063,
+        "max": 2361434
+      },
+      "lpush_ack_ns": {
+        "count": 4972,
+        "min": 85935,
+        "mean": 441272.4887369268,
+        "p50": 459747,
+        "p90": 577059,
+        "p95": 623833,
+        "p99": 739182,
+        "p999": 1311503,
+        "max": 1496843
+      },
+      "ops_per_sec_closed_loop": 976.1939776216293,
+      "parity": {
+        "statuses": {
+          "fully_filled": 100
+        },
+        "fills": 100,
+        "filled_quantity": "100000000000000000",
+        "notional": "6500000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 200,
+        "settlement_msgs": 200,
+        "risk_msgs": 200
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_sweep",
+      "book_size_per_side": 1000,
+      "ops_per_round": 100,
+      "rounds": 50,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 239153,
+        "mean": 846800.8992,
+        "p50": 829656,
+        "p90": 1200396,
+        "p95": 1356855,
+        "p99": 1754772,
+        "p999": 2214062,
+        "max": 2546687
+      },
+      "lpush_ack_ns": {
+        "count": 4944,
+        "min": 83731,
+        "mean": 340115.14482200646,
+        "p50": 361819,
+        "p90": 479817,
+        "p95": 529686,
+        "p99": 688440,
+        "p999": 1448086,
+        "max": 1624845
+      },
+      "ops_per_sec_closed_loop": 1180.9151371293206,
+      "parity": {
+        "statuses": {
+          "fully_filled": 100
+        },
+        "fills": 590,
+        "filled_quantity": "3000000000000000000",
+        "notional": "195000000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 690,
+        "settlement_msgs": 1180,
+        "risk_msgs": 1180
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "market_sweep",
+      "book_size_per_side": 1000,
+      "ops_per_round": 100,
+      "rounds": 50,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 218981,
+        "mean": 853066.5216,
+        "p50": 840609,
+        "p90": 1201095,
+        "p95": 1330289,
+        "p99": 1580368,
+        "p999": 2081868,
+        "max": 2495127
+      },
+      "lpush_ack_ns": {
+        "count": 4964,
+        "min": 81418,
+        "mean": 372937.78485092666,
+        "p50": 371059,
+        "p90": 524262,
+        "p95": 585381,
+        "p99": 765832,
+        "p999": 1516205,
+        "max": 1605953
+      },
+      "ops_per_sec_closed_loop": 1172.241524757546,
+      "parity": {
+        "statuses": {
+          "fully_filled": 100
+        },
+        "fills": 460,
+        "filled_quantity": "2000000000000000000",
+        "notional": "130000000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 560,
+        "settlement_msgs": 920,
+        "risk_msgs": 920
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "cancel",
+      "book_size_per_side": 10000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 187401,
+        "mean": 930917.3488,
+        "p50": 932849,
+        "p90": 1287638,
+        "p95": 1392481,
+        "p99": 1561079,
+        "p999": 1907312,
+        "max": 4052346
+      },
+      "lpush_ack_ns": {
+        "count": 4934,
+        "min": 87542,
+        "mean": 443384.9742602351,
+        "p50": 455171,
+        "p90": 584028,
+        "p95": 632743,
+        "p99": 763200,
+        "p999": 1382696,
+        "max": 3296634
+      },
+      "ops_per_sec_closed_loop": 1074.2092209249845,
+      "parity": {
+        "statuses": {
+          "cancelled": 200
+        },
+        "fills": 0,
+        "filled_quantity": "0",
+        "notional": "0"
+      },
+      "first_round_side_effects": {
+        "requests": 400,
+        "settlement_msgs": 400,
+        "risk_msgs": 400
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_rest",
+      "book_size_per_side": 10000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 225677,
+        "mean": 1085809.2936,
+        "p50": 1094582,
+        "p90": 1433258,
+        "p95": 1510138,
+        "p99": 1628815,
+        "p999": 1845116,
+        "max": 2358265
+      },
+      "lpush_ack_ns": {
+        "count": 4987,
+        "min": 84644,
+        "mean": 442618.7603769801,
+        "p50": 467551,
+        "p90": 575045,
+        "p95": 618855,
+        "p99": 748600,
+        "p999": 1430306,
+        "max": 1781238
+      },
+      "ops_per_sec_closed_loop": 920.9720398362964,
+      "parity": {
+        "statuses": {
+          "accepted": 200
+        },
+        "fills": 0,
+        "filled_quantity": "0",
+        "notional": "0"
+      },
+      "first_round_side_effects": {
+        "requests": 400,
+        "settlement_msgs": 400,
+        "risk_msgs": 400
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_cross_1",
+      "book_size_per_side": 10000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 380482,
+        "mean": 1290763.9282,
+        "p50": 1320145,
+        "p90": 1574685,
+        "p95": 1648612,
+        "p99": 1803203,
+        "p999": 2029507,
+        "max": 2551355
+      },
+      "lpush_ack_ns": {
+        "count": 5000,
+        "min": 84839,
+        "mean": 468110.229,
+        "p50": 485417,
+        "p90": 590082,
+        "p95": 642412,
+        "p99": 810835,
+        "p999": 963680,
+        "max": 1611361
+      },
+      "ops_per_sec_closed_loop": 774.7350062644864,
+      "parity": {
+        "statuses": {
+          "fully_filled": 200
+        },
+        "fills": 200,
+        "filled_quantity": "200000000000000000",
+        "notional": "13000000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 400,
+        "settlement_msgs": 400,
+        "risk_msgs": 400
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_sweep",
+      "book_size_per_side": 10000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 268976,
+        "mean": 1162061.3112,
+        "p50": 953346,
+        "p90": 2234968,
+        "p95": 2878445,
+        "p99": 3457480,
+        "p999": 3954772,
+        "max": 4156640
+      },
+      "lpush_ack_ns": {
+        "count": 4993,
+        "min": 85439,
+        "mean": 371278.5996394953,
+        "p50": 371522,
+        "p90": 495494,
+        "p95": 563892,
+        "p99": 749087,
+        "p999": 1245267,
+        "max": 1466544
+      },
+      "ops_per_sec_closed_loop": 860.5397928336089,
+      "parity": {
+        "statuses": {
+          "fully_filled": 200
+        },
+        "fills": 1856,
+        "filled_quantity": "6000000000000000000",
+        "notional": "390000000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 2056,
+        "settlement_msgs": 3712,
+        "risk_msgs": 3712
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "market_sweep",
+      "book_size_per_side": 10000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 273611,
+        "mean": 1205968.9882,
+        "p50": 1065876,
+        "p90": 2074511,
+        "p95": 2405744,
+        "p99": 2775601,
+        "p999": 3344625,
+        "max": 3821065
+      },
+      "lpush_ack_ns": {
+        "count": 4996,
+        "min": 85287,
+        "mean": 372590.7608086469,
+        "p50": 378673,
+        "p90": 504564,
+        "p95": 560651,
+        "p99": 724488,
+        "p999": 1162714,
+        "max": 1662369
+      },
+      "ops_per_sec_closed_loop": 829.2087191168786,
+      "parity": {
+        "statuses": {
+          "fully_filled": 200
+        },
+        "fills": 1606,
+        "filled_quantity": "4000000000000000000",
+        "notional": "260000000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 1806,
+        "settlement_msgs": 3212,
+        "risk_msgs": 3212
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "cancel",
+      "book_size_per_side": 100000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 218908,
+        "mean": 1037794.7956,
+        "p50": 1040360,
+        "p90": 1385820,
+        "p95": 1470648,
+        "p99": 1629213,
+        "p999": 2119354,
+        "max": 2784489
+      },
+      "lpush_ack_ns": {
+        "count": 4986,
+        "min": 82828,
+        "mean": 438701.59647011635,
+        "p50": 458815,
+        "p90": 572871,
+        "p95": 607620,
+        "p99": 725215,
+        "p999": 1306853,
+        "max": 2060834
+      },
+      "ops_per_sec_closed_loop": 963.5816292775404,
+      "parity": {
+        "statuses": {
+          "cancelled": 200
+        },
+        "fills": 0,
+        "filled_quantity": "0",
+        "notional": "0"
+      },
+      "first_round_side_effects": {
+        "requests": 400,
+        "settlement_msgs": 400,
+        "risk_msgs": 400
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_rest",
+      "book_size_per_side": 100000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 497104,
+        "mean": 1594287.953,
+        "p50": 1605316,
+        "p90": 1880518,
+        "p95": 1956415,
+        "p99": 2132319,
+        "p999": 2727945,
+        "max": 3190838
+      },
+      "lpush_ack_ns": {
+        "count": 5000,
+        "min": 94102,
+        "mean": 468982.6742,
+        "p50": 484855,
+        "p90": 574622,
+        "p95": 607725,
+        "p99": 711599,
+        "p999": 1287051,
+        "max": 1800973
+      },
+      "ops_per_sec_closed_loop": 627.239262592609,
+      "parity": {
+        "statuses": {
+          "accepted": 200
+        },
+        "fills": 0,
+        "filled_quantity": "0",
+        "notional": "0"
+      },
+      "first_round_side_effects": {
+        "requests": 400,
+        "settlement_msgs": 400,
+        "risk_msgs": 400
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_cross_1",
+      "book_size_per_side": 100000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 1130047,
+        "mean": 2281629.318,
+        "p50": 2309769,
+        "p90": 2719984,
+        "p95": 2788006,
+        "p99": 2923274,
+        "p999": 6259980,
+        "max": 10550241
+      },
+      "lpush_ack_ns": {
+        "count": 5000,
+        "min": 97859,
+        "mean": 487425.925,
+        "p50": 500631,
+        "p90": 579254,
+        "p95": 613597,
+        "p99": 699788,
+        "p999": 1122595,
+        "max": 1560143
+      },
+      "ops_per_sec_closed_loop": 438.28328822342036,
+      "parity": {
+        "statuses": {
+          "fully_filled": 200
+        },
+        "fills": 200,
+        "filled_quantity": "200000000000000000",
+        "notional": "13000000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 400,
+        "settlement_msgs": 400,
+        "risk_msgs": 400
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "limit_sweep",
+      "book_size_per_side": 100000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 1816769,
+        "mean": 7630742.6218,
+        "p50": 6914086,
+        "p90": 13291231,
+        "p95": 14010597,
+        "p99": 14846298,
+        "p999": 15546619,
+        "max": 17018790
+      },
+      "lpush_ack_ns": {
+        "count": 5000,
+        "min": 130562,
+        "mean": 441268.673,
+        "p50": 423990,
+        "p90": 565484,
+        "p95": 617563,
+        "p99": 753698,
+        "p999": 995839,
+        "max": 2655769
+      },
+      "ops_per_sec_closed_loop": 131.04884407228403,
+      "parity": {
+        "statuses": {
+          "fully_filled": 200
+        },
+        "fills": 2800,
+        "filled_quantity": "6000000000000000000",
+        "notional": "390000000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 3000,
+        "settlement_msgs": 5600,
+        "risk_msgs": 5600
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    },
+    {
+      "scenario": "market_sweep",
+      "book_size_per_side": 100000,
+      "ops_per_round": 200,
+      "rounds": 25,
+      "warmup_rounds": 3,
+      "samples": 5000,
+      "truncated_by_budget": false,
+      "latency_ns": {
+        "count": 5000,
+        "min": 2280910,
+        "mean": 6251282.5288,
+        "p50": 6208682,
+        "p90": 9810279,
+        "p95": 10174680,
+        "p99": 10642712,
+        "p999": 11093068,
+        "max": 11737772
+      },
+      "lpush_ack_ns": {
+        "count": 5000,
+        "min": 133141,
+        "mean": 438555.4534,
+        "p50": 422392,
+        "p90": 567035,
+        "p95": 622160,
+        "p99": 735569,
+        "p999": 925383,
+        "max": 1729206
+      },
+      "ops_per_sec_closed_loop": 159.9671739987667,
+      "parity": {
+        "statuses": {
+          "fully_filled": 200
+        },
+        "fills": 800,
+        "filled_quantity": "4000000000000000000",
+        "notional": "260000000000000000000000"
+      },
+      "first_round_side_effects": {
+        "requests": 1000,
+        "settlement_msgs": 1600,
+        "risk_msgs": 1600
+      },
+      "anomalies": 0,
+      "anomaly_examples": []
+    }
+  ],
+  "load": [
+    {
+      "book_size_per_side": 1000,
+      "idle": {
+        "e2e_ns": {
+          "all": {
+            "count": 2000,
+            "min": 404514,
+            "mean": 1184050.289,
+            "p50": 1201072,
+            "p90": 1487273,
+            "p95": 1561419,
+            "p99": 1665605,
+            "p999": 1771207,
+            "max": 1781890
+          },
+          "rest": {
+            "count": 1000,
+            "min": 404514,
+            "mean": 1175869.11,
+            "p50": 1194631,
+            "p90": 1488340,
+            "p95": 1561419,
+            "p99": 1641763,
+            "p999": 1781890,
+            "max": 1781890
+          },
+          "cross": {
+            "count": 1000,
+            "min": 457883,
+            "mean": 1192231.468,
+            "p50": 1204254,
+            "p90": 1483524,
+            "p95": 1560820,
+            "p99": 1675080,
+            "p999": 1771207,
+            "max": 1771207
+          }
+        },
+        "anomalies": 0
+      },
+      "steps": [
+        {
+          "offered_rate": 50,
+          "requests": 1500,
+          "received": 1500,
+          "lost": 0,
+          "achieved_rate": 50.028955702281884,
+          "send_lag_ns": {
+            "count": 1500,
+            "min": 3944,
+            "mean": 516241.6506666667,
+            "p50": 506149,
+            "p90": 976896,
+            "p95": 1041722,
+            "p99": 1062346,
+            "p999": 1611659,
+            "max": 1694649
+          },
+          "lpush_ack_ns": {
+            "count": 1500,
+            "min": 188064,
+            "mean": 564519.1893333333,
+            "p50": 573931,
+            "p90": 682955,
+            "p95": 714501,
+            "p99": 772180,
+            "p999": 836992,
+            "max": 859555
+          },
+          "post_enqueue_ns": {
+            "count": 1500,
+            "min": 243585,
+            "mean": 839507.716,
+            "p50": 881881,
+            "p90": 1034357,
+            "p95": 1081480,
+            "p99": 1249858,
+            "p999": 1333428,
+            "max": 1421854
+          },
+          "send_burst": {
+            "count": 1500,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.981974232,
+          "e2e_ns": {
+            "all": {
+              "count": 1500,
+              "min": 988974,
+              "mean": 1920268.556,
+              "p50": 2002598,
+              "p90": 2434101,
+              "p95": 2500996,
+              "p99": 2612677,
+              "p999": 3010788,
+              "max": 3165369
+            },
+            "rest": {
+              "count": 750,
+              "min": 1019982,
+              "mean": 1909268.028,
+              "p50": 1992407,
+              "p90": 2428766,
+              "p95": 2494734,
+              "p99": 2608837,
+              "p999": 3165369,
+              "max": 3165369
+            },
+            "cross": {
+              "count": 750,
+              "min": 988974,
+              "mean": 1931269.084,
+              "p50": 2013879,
+              "p90": 2443783,
+              "p95": 2507538,
+              "p99": 2623914,
+              "p999": 2756151,
+              "max": 2756151
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 100,
+          "requests": 3000,
+          "received": 3000,
+          "lost": 0,
+          "achieved_rate": 100.02607538081571,
+          "send_lag_ns": {
+            "count": 3000,
+            "min": 11281,
+            "mean": 519467.57266666665,
+            "p50": 515413,
+            "p90": 937242,
+            "p95": 1023038,
+            "p99": 1059280,
+            "p999": 1131907,
+            "max": 1146459
+          },
+          "lpush_ack_ns": {
+            "count": 3000,
+            "min": 253865,
+            "mean": 586734.138,
+            "p50": 600957,
+            "p90": 709157,
+            "p95": 737738,
+            "p99": 793275,
+            "p999": 888703,
+            "max": 959276
+          },
+          "post_enqueue_ns": {
+            "count": 3000,
+            "min": 149430,
+            "mean": 673526.675,
+            "p50": 675923,
+            "p90": 925207,
+            "p95": 977374,
+            "p99": 1098475,
+            "p999": 1316900,
+            "max": 3286338
+          },
+          "send_burst": {
+            "count": 3000,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.991689465,
+          "e2e_ns": {
+            "all": {
+              "count": 3000,
+              "min": 915990,
+              "mean": 1779728.3856666666,
+              "p50": 1746128,
+              "p90": 2310690,
+              "p95": 2376616,
+              "p99": 2522486,
+              "p999": 2723304,
+              "max": 4698231
+            },
+            "rest": {
+              "count": 1500,
+              "min": 915990,
+              "mean": 1763284.758,
+              "p50": 1733076,
+              "p90": 2320494,
+              "p95": 2372204,
+              "p99": 2483915,
+              "p999": 2723304,
+              "max": 4698231
+            },
+            "cross": {
+              "count": 1500,
+              "min": 924652,
+              "mean": 1796172.0133333334,
+              "p50": 1755218,
+              "p90": 2292885,
+              "p95": 2380994,
+              "p99": 2527661,
+              "p999": 2699696,
+              "max": 2750400
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 200,
+          "requests": 6000,
+          "received": 6000,
+          "lost": 0,
+          "achieved_rate": 200.0231360627441,
+          "send_lag_ns": {
+            "count": 6000,
+            "min": 581,
+            "mean": 541002.857,
+            "p50": 544223,
+            "p90": 960907,
+            "p95": 1017135,
+            "p99": 1050889,
+            "p999": 1354992,
+            "max": 2690631
+          },
+          "lpush_ack_ns": {
+            "count": 6000,
+            "min": 91201,
+            "mean": 473618.81516666664,
+            "p50": 471931,
+            "p90": 616543,
+            "p95": 650307,
+            "p99": 716535,
+            "p999": 824314,
+            "max": 1025680
+          },
+          "post_enqueue_ns": {
+            "count": 6000,
+            "min": 116985,
+            "mean": 743778.5551666666,
+            "p50": 745426,
+            "p90": 961087,
+            "p95": 1017310,
+            "p99": 1201832,
+            "p999": 1338723,
+            "max": 1430232
+          },
+          "send_burst": {
+            "count": 6000,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.996548218,
+          "e2e_ns": {
+            "all": {
+              "count": 6000,
+              "min": 684717,
+              "mean": 1758400.2273333333,
+              "p50": 1825353,
+              "p90": 2154141,
+              "p95": 2218039,
+              "p99": 2461577,
+              "p999": 2748087,
+              "max": 3941332
+            },
+            "rest": {
+              "count": 3000,
+              "min": 684717,
+              "mean": 1746822.7106666667,
+              "p50": 1824477,
+              "p90": 2141727,
+              "p95": 2203439,
+              "p99": 2351815,
+              "p999": 2616685,
+              "max": 2718996
+            },
+            "cross": {
+              "count": 3000,
+              "min": 837931,
+              "mean": 1769977.744,
+              "p50": 1826368,
+              "p90": 2167231,
+              "p95": 2230820,
+              "p99": 2578369,
+              "p999": 3053962,
+              "max": 3941332
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 400,
+          "requests": 12000,
+          "received": 12000,
+          "lost": 0,
+          "achieved_rate": 400.00771728222156,
+          "send_lag_ns": {
+            "count": 12000,
+            "min": 645,
+            "mean": 530381.9255,
+            "p50": 529011,
+            "p90": 957481,
+            "p95": 1011813,
+            "p99": 1048517,
+            "p999": 1272966,
+            "max": 3178983
+          },
+          "lpush_ack_ns": {
+            "count": 12000,
+            "min": 80868,
+            "mean": 334231.8585833333,
+            "p50": 316799,
+            "p90": 465375,
+            "p95": 504723,
+            "p99": 600558,
+            "p999": 758497,
+            "max": 1813801
+          },
+          "post_enqueue_ns": {
+            "count": 12000,
+            "min": 9741,
+            "mean": 698941.5989166667,
+            "p50": 708512,
+            "p90": 911908,
+            "p95": 968051,
+            "p99": 1117570,
+            "p999": 1334480,
+            "max": 4638908
+          },
+          "send_burst": {
+            "count": 11999,
+            "min": 1,
+            "mean": 1.0000833402783564,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 2
+          },
+          "send_duration_s": 29.999445115,
+          "e2e_ns": {
+            "all": {
+              "count": 12000,
+              "min": 352730,
+              "mean": 1563555.383,
+              "p50": 1542298,
+              "p90": 2034028,
+              "p95": 2113694,
+              "p99": 2310056,
+              "p999": 2574157,
+              "max": 5747846
+            },
+            "rest": {
+              "count": 6000,
+              "min": 352730,
+              "mean": 1553906.0305,
+              "p50": 1533655,
+              "p90": 2045536,
+              "p95": 2110775,
+              "p99": 2256467,
+              "p999": 2677438,
+              "max": 5747846
+            },
+            "cross": {
+              "count": 6000,
+              "min": 520062,
+              "mean": 1573204.7355,
+              "p50": 1550710,
+              "p90": 2029194,
+              "p95": 2115976,
+              "p99": 2354149,
+              "p999": 2557575,
+              "max": 3945970
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 800,
+          "requests": 24000,
+          "received": 24000,
+          "lost": 0,
+          "achieved_rate": 799.9887823439636,
+          "send_lag_ns": {
+            "count": 24000,
+            "min": 237,
+            "mean": 528618.4857083333,
+            "p50": 524317,
+            "p90": 945862,
+            "p95": 1001043,
+            "p99": 1047101,
+            "p999": 1604016,
+            "max": 7691708
+          },
+          "lpush_ack_ns": {
+            "count": 24000,
+            "min": 76203,
+            "mean": 268123.19554166665,
+            "p50": 266666,
+            "p90": 446306,
+            "p95": 496583,
+            "p99": 593096,
+            "p999": 805755,
+            "max": 3959261
+          },
+          "post_enqueue_ns": {
+            "count": 24000,
+            "min": 0,
+            "mean": 598436.4132916667,
+            "p50": 607194,
+            "p90": 860750,
+            "p95": 921600,
+            "p99": 1078997,
+            "p999": 1548160,
+            "max": 8317718
+          },
+          "send_burst": {
+            "count": 23958,
+            "min": 1,
+            "mean": 1.0017530678687703,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 2,
+            "max": 7
+          },
+          "send_duration_s": 30.000526546,
+          "e2e_ns": {
+            "all": {
+              "count": 24000,
+              "min": 291958,
+              "mean": 1395175.8041666667,
+              "p50": 1373675,
+              "p90": 1955352,
+              "p95": 2047868,
+              "p99": 2226364,
+              "p999": 3107424,
+              "max": 9087049
+            },
+            "rest": {
+              "count": 12000,
+              "min": 291979,
+              "mean": 1389928.9846666667,
+              "p50": 1369876,
+              "p90": 1951942,
+              "p95": 2059273,
+              "p99": 2215226,
+              "p999": 2813084,
+              "max": 8876278
+            },
+            "cross": {
+              "count": 12000,
+              "min": 291958,
+              "mean": 1400422.6236666667,
+              "p50": 1377877,
+              "p90": 1958792,
+              "p95": 2041181,
+              "p99": 2236745,
+              "p999": 3147372,
+              "max": 9087049
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 1600,
+          "requests": 48000,
+          "received": 48000,
+          "lost": 0,
+          "achieved_rate": 1599.948921417357,
+          "send_lag_ns": {
+            "count": 48000,
+            "min": 1541,
+            "mean": 534541.2017083333,
+            "p50": 531901,
+            "p90": 956259,
+            "p95": 1006420,
+            "p99": 1049569,
+            "p999": 1717295,
+            "max": 9329259
+          },
+          "lpush_ack_ns": {
+            "count": 48000,
+            "min": 70038,
+            "mean": 271052.3965833333,
+            "p50": 247221,
+            "p90": 455760,
+            "p95": 512394,
+            "p99": 605364,
+            "p999": 837244,
+            "max": 2443260
+          },
+          "post_enqueue_ns": {
+            "count": 48000,
+            "min": 0,
+            "mean": 801312.6745,
+            "p50": 735789,
+            "p90": 1413402,
+            "p95": 1607765,
+            "p99": 2018097,
+            "p999": 3199268,
+            "max": 9895699
+          },
+          "send_burst": {
+            "count": 28384,
+            "min": 1,
+            "mean": 1.6910935738444195,
+            "p50": 2,
+            "p90": 2,
+            "p95": 2,
+            "p99": 2,
+            "p999": 3,
+            "max": 15
+          },
+          "send_duration_s": 30.00133616,
+          "e2e_ns": {
+            "all": {
+              "count": 48000,
+              "min": 432162,
+              "mean": 1606828.8779375,
+              "p50": 1590587,
+              "p90": 2126108,
+              "p95": 2283823,
+              "p99": 2664873,
+              "p999": 5098871,
+              "max": 10501391
+            },
+            "rest": {
+              "count": 24000,
+              "min": 432957,
+              "mean": 1606394.7125416666,
+              "p50": 1591429,
+              "p90": 2129027,
+              "p95": 2287588,
+              "p99": 2657826,
+              "p999": 5173429,
+              "max": 10499618
+            },
+            "cross": {
+              "count": 24000,
+              "min": 432162,
+              "mean": 1607263.0433333332,
+              "p50": 1589924,
+              "p90": 2123070,
+              "p95": 2280967,
+              "p99": 2677617,
+              "p999": 5098871,
+              "max": 10501391
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 2,
+            "p50": 0,
+            "p99": 2
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        }
+      ]
+    },
+    {
+      "book_size_per_side": 10000,
+      "idle": {
+        "e2e_ns": {
+          "all": {
+            "count": 2000,
+            "min": 406749,
+            "mean": 1313361.8335,
+            "p50": 1344539,
+            "p90": 1569966,
+            "p95": 1634039,
+            "p99": 1769125,
+            "p999": 1940264,
+            "max": 2170700
+          },
+          "rest": {
+            "count": 1000,
+            "min": 406749,
+            "mean": 1280405.547,
+            "p50": 1320454,
+            "p90": 1532283,
+            "p95": 1588463,
+            "p99": 1705907,
+            "p999": 2170700,
+            "max": 2170700
+          },
+          "cross": {
+            "count": 1000,
+            "min": 506226,
+            "mean": 1346318.12,
+            "p50": 1381212,
+            "p90": 1600329,
+            "p95": 1667911,
+            "p99": 1793228,
+            "p999": 1903269,
+            "max": 1903269
+          }
+        },
+        "anomalies": 0
+      },
+      "steps": [
+        {
+          "offered_rate": 50,
+          "requests": 1500,
+          "received": 1500,
+          "lost": 0,
+          "achieved_rate": 50.02953471402082,
+          "send_lag_ns": {
+            "count": 1500,
+            "min": 2564,
+            "mean": 497522.66866666666,
+            "p50": 482499,
+            "p90": 957674,
+            "p95": 1010327,
+            "p99": 1079305,
+            "p999": 1192093,
+            "max": 2188245
+          },
+          "lpush_ack_ns": {
+            "count": 1500,
+            "min": 283015,
+            "mean": 662378.2826666667,
+            "p50": 649143,
+            "p90": 829476,
+            "p95": 872337,
+            "p99": 942634,
+            "p999": 1045623,
+            "max": 2103322
+          },
+          "post_enqueue_ns": {
+            "count": 1500,
+            "min": 60348,
+            "mean": 1246330.2326666666,
+            "p50": 1233588,
+            "p90": 1479533,
+            "p95": 1541836,
+            "p99": 1673144,
+            "p999": 1831744,
+            "max": 1832513
+          },
+          "send_burst": {
+            "count": 1500,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.981516259,
+          "e2e_ns": {
+            "all": {
+              "count": 1500,
+              "min": 1587235,
+              "mean": 2406231.184,
+              "p50": 2319501,
+              "p90": 2918818,
+              "p95": 3045253,
+              "p99": 3158386,
+              "p999": 3481028,
+              "max": 4351915
+            },
+            "rest": {
+              "count": 750,
+              "min": 1587235,
+              "mean": 2382017.9626666666,
+              "p50": 2310514,
+              "p90": 2888258,
+              "p95": 3017776,
+              "p99": 3105142,
+              "p999": 3174746,
+              "max": 3174746
+            },
+            "cross": {
+              "count": 750,
+              "min": 1657430,
+              "mean": 2430444.405333333,
+              "p50": 2332732,
+              "p90": 2963004,
+              "p95": 3072798,
+              "p99": 3196141,
+              "p999": 4351915,
+              "max": 4351915
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 100,
+          "requests": 3000,
+          "received": 3000,
+          "lost": 0,
+          "achieved_rate": 100.0267609762492,
+          "send_lag_ns": {
+            "count": 3000,
+            "min": 1389,
+            "mean": 535161.0383333333,
+            "p50": 520081,
+            "p90": 986847,
+            "p95": 1042625,
+            "p99": 1066766,
+            "p999": 1399650,
+            "max": 2366795
+          },
+          "lpush_ack_ns": {
+            "count": 3000,
+            "min": 189084,
+            "mean": 508366.62533333333,
+            "p50": 518077,
+            "p90": 628346,
+            "p95": 675570,
+            "p99": 745838,
+            "p999": 926767,
+            "max": 1020011
+          },
+          "post_enqueue_ns": {
+            "count": 3000,
+            "min": 631697,
+            "mean": 1209164.86,
+            "p50": 1201456,
+            "p90": 1388371,
+            "p95": 1454031,
+            "p99": 1580623,
+            "p999": 1855135,
+            "max": 1877728
+          },
+          "send_burst": {
+            "count": 3000,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.991500722,
+          "e2e_ns": {
+            "all": {
+              "count": 3000,
+              "min": 1287047,
+              "mean": 2252692.523666667,
+              "p50": 2244794,
+              "p90": 2760211,
+              "p95": 2904645,
+              "p99": 3050270,
+              "p999": 3301331,
+              "max": 3843334
+            },
+            "rest": {
+              "count": 1500,
+              "min": 1287047,
+              "mean": 2237532.5853333334,
+              "p50": 2232409,
+              "p90": 2763153,
+              "p95": 2851610,
+              "p99": 2990488,
+              "p999": 3588844,
+              "max": 3843334
+            },
+            "cross": {
+              "count": 1500,
+              "min": 1411960,
+              "mean": 2267852.462,
+              "p50": 2259854,
+              "p90": 2749651,
+              "p95": 2923135,
+              "p99": 3069267,
+              "p999": 3297637,
+              "max": 3301331
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 200,
+          "requests": 6000,
+          "received": 6000,
+          "lost": 0,
+          "achieved_rate": 200.02219927043126,
+          "send_lag_ns": {
+            "count": 6000,
+            "min": 1346,
+            "mean": 534302.6833333333,
+            "p50": 524085,
+            "p90": 974985,
+            "p95": 1032117,
+            "p99": 1057178,
+            "p999": 1176717,
+            "max": 1511799
+          },
+          "lpush_ack_ns": {
+            "count": 6000,
+            "min": 93790,
+            "mean": 501628.5075,
+            "p50": 499929,
+            "p90": 659098,
+            "p95": 702988,
+            "p99": 774980,
+            "p999": 928773,
+            "max": 1214294
+          },
+          "post_enqueue_ns": {
+            "count": 6000,
+            "min": 27555,
+            "mean": 977850.741,
+            "p50": 965208,
+            "p90": 1209126,
+            "p95": 1279115,
+            "p99": 1431921,
+            "p999": 1639504,
+            "max": 5532690
+          },
+          "send_burst": {
+            "count": 6000,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.996237551,
+          "e2e_ns": {
+            "all": {
+              "count": 6000,
+              "min": 989552,
+              "mean": 2013781.9318333333,
+              "p50": 1947496,
+              "p90": 2549760,
+              "p95": 2645788,
+              "p99": 2761953,
+              "p999": 2953724,
+              "max": 7146128
+            },
+            "rest": {
+              "count": 3000,
+              "min": 989552,
+              "mean": 1978391.469,
+              "p50": 1881513,
+              "p90": 2563415,
+              "p95": 2639663,
+              "p99": 2761953,
+              "p999": 2919025,
+              "max": 3018838
+            },
+            "cross": {
+              "count": 3000,
+              "min": 1121100,
+              "mean": 2049172.3946666666,
+              "p50": 1989762,
+              "p90": 2536148,
+              "p95": 2654176,
+              "p99": 2761178,
+              "p999": 3114315,
+              "max": 7146128
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 400,
+          "requests": 12000,
+          "received": 12000,
+          "lost": 0,
+          "achieved_rate": 400.00112549650015,
+          "send_lag_ns": {
+            "count": 12000,
+            "min": 487,
+            "mean": 524973.4809166667,
+            "p50": 523686,
+            "p90": 944136,
+            "p95": 997815,
+            "p99": 1046550,
+            "p999": 1264939,
+            "max": 4291195
+          },
+          "lpush_ack_ns": {
+            "count": 12000,
+            "min": 81349,
+            "mean": 309438.1321666667,
+            "p50": 302444,
+            "p90": 473187,
+            "p95": 512583,
+            "p99": 609187,
+            "p999": 759359,
+            "max": 6501475
+          },
+          "post_enqueue_ns": {
+            "count": 12000,
+            "min": 11336,
+            "mean": 1038779.1506666667,
+            "p50": 1052320,
+            "p90": 1237387,
+            "p95": 1306744,
+            "p99": 1463115,
+            "p999": 1681210,
+            "max": 2474829
+          },
+          "send_burst": {
+            "count": 11998,
+            "min": 1,
+            "mean": 1.0001666944490748,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 2
+          },
+          "send_duration_s": 29.999054633,
+          "e2e_ns": {
+            "all": {
+              "count": 12000,
+              "min": 744753,
+              "mean": 1873190.76375,
+              "p50": 1868976,
+              "p90": 2363089,
+              "p95": 2441704,
+              "p99": 2594877,
+              "p999": 3127986,
+              "max": 6882852
+            },
+            "rest": {
+              "count": 6000,
+              "min": 838179,
+              "mean": 1839215.8121666666,
+              "p50": 1847974,
+              "p90": 2336830,
+              "p95": 2406454,
+              "p99": 2545848,
+              "p999": 3141218,
+              "max": 5719259
+            },
+            "cross": {
+              "count": 6000,
+              "min": 744753,
+              "mean": 1907165.7153333332,
+              "p50": 1881162,
+              "p90": 2392924,
+              "p95": 2471675,
+              "p99": 2623720,
+              "p999": 3127986,
+              "max": 6882852
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 800,
+          "requests": 24000,
+          "received": 24000,
+          "lost": 0,
+          "achieved_rate": 799.9544712578971,
+          "send_lag_ns": {
+            "count": 24000,
+            "min": 226,
+            "mean": 528267.41425,
+            "p50": 529376,
+            "p90": 947505,
+            "p95": 1002452,
+            "p99": 1047093,
+            "p999": 1455493,
+            "max": 5274181
+          },
+          "lpush_ack_ns": {
+            "count": 24000,
+            "min": 73071,
+            "mean": 262013.047125,
+            "p50": 258729,
+            "p90": 439372,
+            "p95": 485045,
+            "p99": 577718,
+            "p999": 757932,
+            "max": 2232749
+          },
+          "post_enqueue_ns": {
+            "count": 24000,
+            "min": 12494,
+            "mean": 885031.6260416667,
+            "p50": 890862,
+            "p90": 1179165,
+            "p95": 1264601,
+            "p99": 1440740,
+            "p999": 1941793,
+            "max": 6567268
+          },
+          "send_burst": {
+            "count": 23970,
+            "min": 1,
+            "mean": 1.0012515644555695,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 2,
+            "max": 5
+          },
+          "send_duration_s": 30.000282309,
+          "e2e_ns": {
+            "all": {
+              "count": 24000,
+              "min": 384754,
+              "mean": 1675312.0874166666,
+              "p50": 1663538,
+              "p90": 2239852,
+              "p95": 2371745,
+              "p99": 2546597,
+              "p999": 3089369,
+              "max": 7438531
+            },
+            "rest": {
+              "count": 12000,
+              "min": 384754,
+              "mean": 1642405.7970833334,
+              "p50": 1636286,
+              "p90": 2201217,
+              "p95": 2347990,
+              "p99": 2541704,
+              "p999": 3072103,
+              "max": 7438531
+            },
+            "cross": {
+              "count": 12000,
+              "min": 468740,
+              "mean": 1708218.37775,
+              "p50": 1689567,
+              "p90": 2266774,
+              "p95": 2387713,
+              "p99": 2549403,
+              "p999": 3251592,
+              "max": 6661956
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 1,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 1600,
+          "requests": 48000,
+          "received": 48000,
+          "lost": 0,
+          "achieved_rate": 1599.9952052410354,
+          "send_lag_ns": {
+            "count": 48000,
+            "min": 1459,
+            "mean": 529446.3214375,
+            "p50": 530107,
+            "p90": 951681,
+            "p95": 1003107,
+            "p99": 1046115,
+            "p999": 1406416,
+            "max": 3656206
+          },
+          "lpush_ack_ns": {
+            "count": 48000,
+            "min": 68282,
+            "mean": 213053.9426875,
+            "p50": 201413,
+            "p90": 387511,
+            "p95": 450463,
+            "p99": 556403,
+            "p999": 728646,
+            "max": 1446434
+          },
+          "post_enqueue_ns": {
+            "count": 48000,
+            "min": 0,
+            "mean": 6321398.411104167,
+            "p50": 2984873,
+            "p90": 18213625,
+            "p95": 24792723,
+            "p99": 31587357,
+            "p999": 36221671,
+            "max": 37944685
+          },
+          "send_burst": {
+            "count": 28410,
+            "min": 1,
+            "mean": 1.689545934530095,
+            "p50": 2,
+            "p90": 2,
+            "p95": 2,
+            "p99": 2,
+            "p999": 3,
+            "max": 6
+          },
+          "send_duration_s": 30.000515327,
+          "e2e_ns": {
+            "all": {
+              "count": 48000,
+              "min": 628332,
+              "mean": 7063897.800916667,
+              "p50": 3726533,
+              "p90": 18925986,
+              "p95": 25463279,
+              "p99": 32305614,
+              "p999": 37050741,
+              "max": 38598868
+            },
+            "rest": {
+              "count": 24000,
+              "min": 651152,
+              "mean": 7054331.691666666,
+              "p50": 3712456,
+              "p90": 18923177,
+              "p95": 25448283,
+              "p99": 32305614,
+              "p999": 36970539,
+              "max": 38242571
+            },
+            "cross": {
+              "count": 24000,
+              "min": 628332,
+              "mean": 7073463.910166667,
+              "p50": 3743680,
+              "p90": 18934860,
+              "p95": 25507779,
+              "p99": 32298641,
+              "p999": 37073950,
+              "max": 38598868
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 49,
+            "p50": 3,
+            "p99": 49
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        }
+      ]
+    },
+    {
+      "book_size_per_side": 100000,
+      "idle": {
+        "e2e_ns": {
+          "all": {
+            "count": 2000,
+            "min": 1509605,
+            "mean": 2391404.932,
+            "p50": 2387370,
+            "p90": 2780656,
+            "p95": 2861503,
+            "p99": 3030850,
+            "p999": 3324364,
+            "max": 3556369
+          },
+          "rest": {
+            "count": 1000,
+            "min": 1509605,
+            "mean": 2168784.222,
+            "p50": 2181417,
+            "p90": 2396818,
+            "p95": 2462473,
+            "p99": 2560906,
+            "p999": 2702834,
+            "max": 2702834
+          },
+          "cross": {
+            "count": 1000,
+            "min": 1782675,
+            "mean": 2614025.642,
+            "p50": 2616213,
+            "p90": 2861503,
+            "p95": 2910264,
+            "p99": 3099562,
+            "p999": 3556369,
+            "max": 3556369
+          }
+        },
+        "anomalies": 0
+      },
+      "steps": [
+        {
+          "offered_rate": 50,
+          "requests": 1500,
+          "received": 1500,
+          "lost": 0,
+          "achieved_rate": 50.0272502534365,
+          "send_lag_ns": {
+            "count": 1500,
+            "min": 1886,
+            "mean": 523919.2926666667,
+            "p50": 475756,
+            "p90": 970439,
+            "p95": 1022952,
+            "p99": 1058818,
+            "p999": 1817021,
+            "max": 8787744
+          },
+          "lpush_ack_ns": {
+            "count": 1500,
+            "min": 291226,
+            "mean": 585074.9473333333,
+            "p50": 596336,
+            "p90": 718308,
+            "p95": 764896,
+            "p99": 842646,
+            "p999": 933677,
+            "max": 967456
+          },
+          "post_enqueue_ns": {
+            "count": 1500,
+            "min": 2090999,
+            "mean": 2950952.885333333,
+            "p50": 2918314,
+            "p90": 3439838,
+            "p95": 3583228,
+            "p99": 3776206,
+            "p999": 4088731,
+            "max": 4375781
+          },
+          "send_burst": {
+            "count": 1500,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.981697728,
+          "e2e_ns": {
+            "all": {
+              "count": 1500,
+              "min": 2936615,
+              "mean": 4059947.1253333334,
+              "p50": 4076039,
+              "p90": 4751186,
+              "p95": 4927744,
+              "p99": 5189190,
+              "p999": 5519555,
+              "max": 12005565
+            },
+            "rest": {
+              "count": 750,
+              "min": 2936615,
+              "mean": 3800547.541333333,
+              "p50": 3792524,
+              "p90": 4371175,
+              "p95": 4449021,
+              "p99": 4607008,
+              "p999": 12005565,
+              "max": 12005565
+            },
+            "cross": {
+              "count": 750,
+              "min": 3212514,
+              "mean": 4319346.709333333,
+              "p50": 4326652,
+              "p90": 4925366,
+              "p95": 5063339,
+              "p99": 5256275,
+              "p999": 5519555,
+              "max": 5519555
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 100,
+          "requests": 3000,
+          "received": 3000,
+          "lost": 0,
+          "achieved_rate": 100.02408796757116,
+          "send_lag_ns": {
+            "count": 3000,
+            "min": 2983,
+            "mean": 519703.04333333333,
+            "p50": 526563,
+            "p90": 958877,
+            "p95": 1008442,
+            "p99": 1055212,
+            "p999": 1103332,
+            "max": 1328040
+          },
+          "lpush_ack_ns": {
+            "count": 3000,
+            "min": 180784,
+            "mean": 518603.38666666666,
+            "p50": 520000,
+            "p90": 659971,
+            "p95": 697656,
+            "p99": 766273,
+            "p999": 845250,
+            "max": 912393
+          },
+          "post_enqueue_ns": {
+            "count": 3000,
+            "min": 1403615,
+            "mean": 2447171.6873333333,
+            "p50": 2410950,
+            "p90": 2984521,
+            "p95": 3087833,
+            "p99": 3355560,
+            "p999": 3532588,
+            "max": 4125939
+          },
+          "send_burst": {
+            "count": 3000,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.991246569,
+          "e2e_ns": {
+            "all": {
+              "count": 3000,
+              "min": 2260569,
+              "mean": 3485478.1173333335,
+              "p50": 3434906,
+              "p90": 4226867,
+              "p95": 4358352,
+              "p99": 4596401,
+              "p999": 4894741,
+              "max": 5458769
+            },
+            "rest": {
+              "count": 1500,
+              "min": 2260569,
+              "mean": 3179529.783333333,
+              "p50": 3210653,
+              "p90": 3695142,
+              "p95": 3777151,
+              "p99": 3945313,
+              "p999": 4235962,
+              "max": 4348268
+            },
+            "cross": {
+              "count": 1500,
+              "min": 2769516,
+              "mean": 3791426.4513333333,
+              "p50": 3786473,
+              "p90": 4358352,
+              "p95": 4443256,
+              "p99": 4711217,
+              "p999": 5076738,
+              "max": 5458769
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 200,
+          "requests": 6000,
+          "received": 6000,
+          "lost": 0,
+          "achieved_rate": 200.00677044918714,
+          "send_lag_ns": {
+            "count": 6000,
+            "min": 1398,
+            "mean": 523116.76766666665,
+            "p50": 525323,
+            "p90": 955599,
+            "p95": 1012801,
+            "p99": 1056315,
+            "p999": 1185006,
+            "max": 2043497
+          },
+          "lpush_ack_ns": {
+            "count": 6000,
+            "min": 92122,
+            "mean": 436069.98466666666,
+            "p50": 442536,
+            "p90": 593297,
+            "p95": 639745,
+            "p99": 717821,
+            "p999": 871298,
+            "max": 1206325
+          },
+          "post_enqueue_ns": {
+            "count": 6000,
+            "min": 1491683,
+            "mean": 2516711.07,
+            "p50": 2491439,
+            "p90": 3099262,
+            "p95": 3221441,
+            "p99": 3437049,
+            "p999": 3715077,
+            "max": 7693906
+          },
+          "send_burst": {
+            "count": 6000,
+            "min": 1,
+            "mean": 1,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 1
+          },
+          "send_duration_s": 29.997136954,
+          "e2e_ns": {
+            "all": {
+              "count": 6000,
+              "min": 2024433,
+              "mean": 3475897.8223333335,
+              "p50": 3471721,
+              "p90": 4230437,
+              "p95": 4418444,
+              "p99": 4684156,
+              "p999": 4920316,
+              "max": 8437761
+            },
+            "rest": {
+              "count": 3000,
+              "min": 2024433,
+              "mean": 3128479.2693333332,
+              "p50": 3108254,
+              "p90": 3734716,
+              "p95": 3841909,
+              "p99": 4048549,
+              "p999": 4648791,
+              "max": 5748697
+            },
+            "cross": {
+              "count": 3000,
+              "min": 2860800,
+              "mean": 3823316.3753333334,
+              "p50": 3798876,
+              "p90": 4415557,
+              "p95": 4531288,
+              "p99": 4744015,
+              "p999": 5730276,
+              "max": 8437761
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 0,
+            "p50": 0,
+            "p99": 0
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 400,
+          "requests": 12000,
+          "received": 12000,
+          "lost": 0,
+          "achieved_rate": 398.90003981513706,
+          "send_lag_ns": {
+            "count": 12000,
+            "min": 792,
+            "mean": 530964.6408333334,
+            "p50": 535923,
+            "p90": 949714,
+            "p95": 1002982,
+            "p99": 1049750,
+            "p999": 1199973,
+            "max": 4232647
+          },
+          "lpush_ack_ns": {
+            "count": 12000,
+            "min": 76793,
+            "mean": 378506.4514166667,
+            "p50": 393628,
+            "p90": 521947,
+            "p95": 567817,
+            "p99": 651891,
+            "p999": 774421,
+            "max": 2338145
+          },
+          "post_enqueue_ns": {
+            "count": 12000,
+            "min": 1327286,
+            "mean": 17962879.46091667,
+            "p50": 9457964,
+            "p90": 61085459,
+            "p95": 73562535,
+            "p99": 79312524,
+            "p999": 83989584,
+            "max": 84786802
+          },
+          "send_burst": {
+            "count": 11999,
+            "min": 1,
+            "mean": 1.0000833402783564,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 1,
+            "max": 2
+          },
+          "send_duration_s": 29.999112538,
+          "e2e_ns": {
+            "all": {
+              "count": 12000,
+              "min": 2274851,
+              "mean": 18872350.553166665,
+              "p50": 10430805,
+              "p90": 61960960,
+              "p95": 74600986,
+              "p99": 79965396,
+              "p999": 84794514,
+              "max": 85224498
+            },
+            "rest": {
+              "count": 6000,
+              "min": 2274851,
+              "mean": 18705687.4355,
+              "p50": 10307264,
+              "p90": 61840057,
+              "p95": 74307980,
+              "p99": 79854167,
+              "p999": 84716569,
+              "max": 85224498
+            },
+            "cross": {
+              "count": 6000,
+              "min": 2834399,
+              "mean": 19039013.670833334,
+              "p50": 10624122,
+              "p90": 62167856,
+              "p95": 74607101,
+              "p99": 79965396,
+              "p999": 84893694,
+              "max": 85202882
+            }
+          },
+          "queue_depth": {
+            "samples": 121,
+            "max": 32,
+            "p50": 3,
+            "p99": 29
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        },
+        {
+          "offered_rate": 800,
+          "requests": 24000,
+          "received": 20000,
+          "lost": 4000,
+          "achieved_rate": 398.03830938121894,
+          "send_lag_ns": {
+            "count": 24000,
+            "min": 388,
+            "mean": 531510.6115416667,
+            "p50": 529225,
+            "p90": 952033,
+            "p95": 1005459,
+            "p99": 1048084,
+            "p999": 1429638,
+            "max": 5021148
+          },
+          "lpush_ack_ns": {
+            "count": 20000,
+            "min": 68734,
+            "mean": 320466.5922,
+            "p50": 311425,
+            "p90": 479596,
+            "p95": 532508,
+            "p99": 623273,
+            "p999": 804758,
+            "max": 3201698
+          },
+          "post_enqueue_ns": {
+            "count": 20000,
+            "min": 6140952,
+            "mean": 12507510689.7198,
+            "p50": 12461966594,
+            "p90": 22616576555,
+            "p95": 23951097687,
+            "p99": 24988049024,
+            "p999": 25221720631,
+            "max": 25246878269
+          },
+          "send_burst": {
+            "count": 23968,
+            "min": 1,
+            "mean": 1.0013351134846462,
+            "p50": 1,
+            "p90": 1,
+            "p95": 1,
+            "p99": 1,
+            "p999": 2,
+            "max": 5
+          },
+          "send_duration_s": 30.000037411,
+          "e2e_ns": {
+            "all": {
+              "count": 20000,
+              "min": 7183505,
+              "mean": 12508363107.8714,
+              "p50": 12462905042,
+              "p90": 22617543702,
+              "p95": 23951525965,
+              "p99": 24989251653,
+              "p999": 25222032108,
+              "max": 25247669826
+            },
+            "rest": {
+              "count": 10000,
+              "min": 8603097,
+              "mean": 12508828843.937,
+              "p50": 12462905042,
+              "p90": 22617543702,
+              "p95": 23951525965,
+              "p99": 24989251653,
+              "p999": 25223004190,
+              "max": 25247669826
+            },
+            "cross": {
+              "count": 10000,
+              "min": 7183505,
+              "mean": 12507897371.8058,
+              "p50": 12462137237,
+              "p90": 22616337925,
+              "p95": 23950122737,
+              "p99": 24988310530,
+              "p999": 25222032108,
+              "max": 25246672530
+            }
+          },
+          "queue_depth": {
+            "samples": 201,
+            "max": 11948,
+            "p50": 6961,
+            "p99": 11844
+          },
+          "anomalies": 0,
+          "anomaly_examples": []
+        }
+      ],
+      "stopped_early_at_rate": 800
+    }
+  ],
+  "finished_at": "2026-11-14T12:55:29.450Z",
+  "leftover_side_effect_queues": {
+    "settlement-queue": 1228110,
+    "matching-to-risk-pub-queue": 1228110
+  },
+  "dropped_backlog": 3961
+}
