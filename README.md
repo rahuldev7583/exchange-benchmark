@@ -9,150 +9,91 @@ Benchmark of two matching engines on identical workloads:
 
 ## Layers
 
-| Layer | Question | Status |
+| Layer | Measures | Status |
 |---|---|---|
-| **1. Orderbook** | Given a prepared command and an existing orderbook, how long does the in-memory operation take? | implemented |
-| **2. Engine service** | How long does the same Layer 1 scenario take through the Redis queue, engine and result channel? | implemented ([docs/LAYER2.md](docs/LAYER2.md)) |
-| 3. Full exchange | How long until a client receives the matching result through the backend? | planned |
+| **1. Orderbook** | In-memory operation on a prepared book (no Redis, JSON or network). [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | done |
+| **2. Engine service** | Same scenarios through the Redis queue, engine and result channel. [docs/LAYER2.md](docs/LAYER2.md) | done |
+| 3. Full exchange | Client to result through the backend | planned |
 
-Layer 1 includes matching, book mutation and result construction. It excludes Redis, JSON parsing, networking, authentication, database work and workload generation. It reports p50, p90, p99, p99.9, max and throughput per scenario and book depth. Details: [docs/METHODOLOGY.md](docs/METHODOLOGY.md).
-
-## Prerequisites
-
-- git, Rust (stable, edition 2024 support), [Bun](https://bun.sh) >= 1.3
-- Linux recommended (`taskset` for CPU pinning)
+Scenarios: `limit_rest`, `limit_cross_1`, `limit_sweep`, `market_sweep`, `cancel`, at 1k, 10k and 100k resting orders per side.
 
 ## Setup
+
+Requires git, Rust (stable, edition 2024), [Bun](https://bun.sh) >= 1.3. Linux recommended.
 
 ```bash
 git clone --recurse-submodules <this-repo-url>
 cd exchange-benchmark
-make setup          # inits submodules, builds the Rust harness (release)
+make setup
 ```
 
-## Run
+## Layer 1
 
 ```bash
-make layer1-smoke   # about 10 s, 1k book, sanity check and parity
-make layer1         # default profile: 1k and 10k books, about 10 to 15 min
-make layer1-full    # 1k, 10k, 100k books, for published numbers
+make layer1-smoke   # ~10 s sanity check
+make layer1-full    # 1k, 10k, 100k books (published numbers)
 make layer1-rust    # Rust only
 make layer1-ts      # TS only
-
-BENCH_CPU=2 make layer1-full     # pin each engine process to core 2
+BENCH_CPU=2 make layer1-full   # pin to a core
 ```
 
-Each run writes `results/layer1-<timestamp>-<profile>/` with:
+Output: `results/layer1-<timestamp>-<profile>/` (`report.md`, `summary.csv`, raw JSON, `env.json`). Config: [config/layer1.json](config/layer1.json).
 
-| File | Content |
-|---|---|
-| `report.md` | Environment, latency tables, TS/Rust ratios, parity check |
-| `summary.csv` | One row per engine, scenario and book size |
-| `rust.json`, `ts.json` | Raw per-cell results |
-| `env.json` | CPU, kernel, toolchains, engine commits |
+## Layer 2
 
-`results/latest` links to the last run. Regenerate a report with `make report`. Copy runs you want to keep into `results/published/` (the rest of `results/` is git-ignored).
-
-## Scenarios
-
-`limit_rest`, `limit_cross_1`, `limit_sweep`, `market_sweep`, `cancel`, each at 1k, 10k and 100k resting orders per side. Edit [config/layer1.json](config/layer1.json) to change profiles, sample counts or book sizes. Both harnesses read the same file.
-
-## Layer 2: engine service (Redis, two hosts)
-
-Two EC2 hosts and one shared Upstash database. Run **one engine at a time**, then repeat for the other.
-
-| Host | Runs |
-|---|---|
-| Engine EC2 | exactly one engine (`rust` or `ts`) |
-| Load-generator EC2 | this benchmark |
-
-**1. Both hosts:** clone, then create `.env` (git-ignored) with the same `REDIS_URL`.
+Runs on one EC2 instance (same region) with Redis in Docker. Run **one engine at a time** and restart it before each run (books must be empty).
 
 ```bash
-git clone --recurse-submodules <this-repo-url> && cd exchange-benchmark
-cp .env.example .env && $EDITOR .env        # set REDIS_URL (rediss://...)
-```
+cp .env.example .env && $EDITOR .env     # set REDIS_URL (redis://localhost:6379)
+docker run -d --name redis -p 6379:6379 redis:7
 
-**2. Engine host, one-time setup** (needs Rust for `rust`, Bun for `ts`):
-
-```bash
-make engine-setup-rust      # cargo build --release
-make engine-setup-ts        # bun install + prisma generate (no database is used)
-```
-
-**3. Load-generator host, one-time setup:**
-
-```bash
+make engine-setup-rust                   # or engine-setup-ts
 (cd layer2-service && bun install)
-```
 
-**4. Smoke test (about 1 minute per engine).** Start the engine on the engine host, then run the smoke test on the load-generator host:
-
-```bash
-# engine host
-make engine-rust            # leave running (tmux/screen)
-# loadgen host
-make layer2-smoke ENGINE=rust
-# engine host: Ctrl-C, then
+make engine-rust                         # terminal 1 (fresh process)
+make layer2-full ENGINE=rust             # terminal 2; use layer2-smoke for a quick check
+# stop engine, then
 make engine-ts
-# loadgen host
-make layer2-smoke ENGINE=ts
-```
-
-**5. Full run.** Restart the engine first (the book must be empty), then:
-
-```bash
-# engine host
-make engine-rust            # fresh process
-# loadgen host
-make layer2-full ENGINE=rust
-
-# engine host: Ctrl-C, start fresh
-make engine-ts
-# loadgen host
 make layer2-full ENGINE=ts
 
-# loadgen host: side-by-side comparison of the latest rust and ts full runs
-make layer2-report
-make layer2-clean           # optional: delete unconsumed settlement/risk queues in Redis
+make layer2-report                       # side-by-side comparison with parity gate
+make layer2-clean                        # optional: clear leftover settlement/risk queues
 ```
 
-Output: `results/layer2-<ts>-<engine>-<profile>/` (`layer2.json`, `report.md`, `env.json`) and `results/layer2-compare-<profile>-<ts>/report.md`. Layer 2 runs the five Layer 1 scenarios (`limit_rest`, `limit_cross_1`, `limit_sweep`, `market_sweep`, `cancel`) at each book size over Redis, then an open-loop load test per book size. The comparison report has a parity gate (statuses, fills, quantity, notional, and the number of settlement/risk messages each engine wrote) and exits with code 2 if the engines did different work. A run fails (non-zero exit) if the engine answers with an unexpected status or a book is not empty at start. Profiles: `smoke`, `full` (1k and 10k books), `deep` (adds 100k, very slow to seed through the TS engine).
+Profiles: `smoke`, `full` (1k and 10k books), `deep` (adds 100k, slow through the TS engine). Output: `results/layer2-<ts>-<engine>-<profile>/` and `results/layer2-compare-<profile>-<ts>/`. Config: [config/layer2.json](config/layer2.json).
 
-Optional: `ENGINE_CPU=2 make engine-rust` pins the engine; `ENGINE_HOST_DESC`, `LOADGEN_HOST_DESC` and `REDIS_DESC` in `.env` are recorded in the report. Edit [config/layer2.json](config/layer2.json) to change rates or durations. Check your Upstash plan limits first (see [docs/LAYER2.md](docs/LAYER2.md)).
+## Conclusions
+
+Latest published results in [results/published/](results/published/). Host: Intel Xeon Platinum 8488C, 4 threads.
+
+### Layer 1: orderbook (`layer1-20261025T105646Z-full`)
+
+- Rust is much faster in memory for everything except `cancel`: p50 about 1.6 µs vs 72 µs (1k book, `limit_rest`), 11 µs vs 973 µs (10k), 111 µs vs 11.9 ms (100k).
+- Gap grows with depth: 8 to 44x at 1k, 28 to 95x at 10k, 35 to 107x at 100k (p50).
+- TS wins `cancel` (p50 18 µs vs 274 µs at 1k, 383 µs vs 3.1 ms at 10k). Rust cancel scales with book depth, hitting 87 ms at 100k.
+- Parity: status, fills and quantity match everywhere. Fill notional differs for the crossing scenarios (known asymmetry, see methodology).
+
+### Layer 2: engine service (`layer2-compare-deep-20261114T130110Z`)
+
+- Redis round trips dominate at small depth. At 1k, both engines sit at about 0.8 to 1.1 ms p50 (transport floor about 0.56 ms) and the ratio is 0.84 to 1.09x.
+- Rust pulls ahead as the book grows: about 2x at 10k and 7 to 15x at 100k for `limit_rest`, `limit_cross_1` and `cancel` (1.0 to 1.6 ms vs 16 to 17 ms p50).
+- Under open-loop load, both handle 1,600 req/s on a 1k book. At 10k, TS collapses at 800 req/s (achieved 607/s, queue backlog) while Rust holds 800/s and degrades at 1,600/s. At 100k, Rust degrades at 400/s and fails at 800/s; TS fails at 100/s.
+- Caveat: the run's parity gate **failed** on `market_sweep` at 100k (TS did 3x the requests and settlement/risk messages, hit its time budget), so 100k `market_sweep` and `limit_sweep` figures are not comparable. All other cells match.
 
 ## Repo structure
 
 ```
-exchange-benchmark/
-├── engines/                         # pinned submodules (never edited here)
-│   ├── centralized-exchange/        # turborepo; apps/matching-engine/engine.ts is benchmarked
-│   └── matching-engine-rust/
-├── config/layer1.json               # shared workload parameters and profiles
-├── layer1-orderbook/
-│   ├── rust/                        # Cargo harness, path-depends on the Rust engine
-│   └── ts/bench.ts                  # Bun harness, imports engine.ts directly
-├── layer2-service/                  # layer 2 load generator (bun, node-redis)
-├── scripts/                         # setup, run, env collection, reports, engine start
-├── docs/
-│   ├── METHODOLOGY.md               # layer 1 workload definition, parity gate, caveats
-│   ├── LAYER2.md                    # layer 2 topology, workload, latency separation
-│   └── HARDWARE_AND_DEPLOYMENT.md   # instance specs, tuning, run discipline, layers 2 and 3
-└── results/                         # run output; published/ is committed
+engines/                 pinned submodules (not edited here)
+config/                  layer1.json, layer2.json
+layer1-orderbook/        Rust and Bun harnesses
+layer2-service/          load generator (bun, node-redis)
+scripts/                 setup, run, reports, engine start
+docs/                    METHODOLOGY, LAYER2, HARDWARE_AND_DEPLOYMENT
+results/                 run output; published/ is committed
 ```
 
-## Updating an engine
+## Notes
 
-```bash
-make update-engines                  # or: git -C engines/<name> checkout <sha>
-git add engines && git commit -m "bump engines"
-```
-
-Any engine change invalidates previous numbers. Run again.
-
-## Reading results correctly
-
-- The parity check must pass. Otherwise the two engines did different work (the script exits with code 2).
-- Compare engines only within the same run, on the same machine.
-- Read the "Known asymmetries" section of the methodology doc before publishing.
-- Numbers from the shared dev VM are for sanity checks only. See the hardware doc for the publication setup.
+- `make update-engines` bumps submodules. Any engine change invalidates previous numbers.
+- Compare engines only within the same run setup, and only if the parity check passes (otherwise the script exits with code 2).
+- Read "Known asymmetries" in [docs/METHODOLOGY.md](docs/METHODOLOGY.md) before publishing.

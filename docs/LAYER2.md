@@ -7,17 +7,17 @@ The engines are black boxes. The load generator speaks the engine's own Redis pr
 ## Topology
 
 ```
- loadgen EC2                       Upstash (one database)                     engine EC2
- ┌──────────────┐  LPUSH incoming-request  ┌─────────┐  BRPOP (3 queues)  ┌────────────────┐
- │ layer2 bench │ ───────────────────────► │  Redis  │ ◄───────────────── │ rust OR ts     │
- │ (bun)        │ ◄─────────────────────── │         │ ───────────────►   │ engine         │
- └──────────────┘  RPOP/BRPOP              └─────────┘  LPUSH response-   └────────────────┘
-                   response-queue-{id}                   queue-{backend},
-                                                         settlement-queue,
-                                                         matching-to-risk-pub-queue
+ EC2 instance (one host)
+ ┌──────────────┐  LPUSH incoming-request  ┌──────────────┐  BRPOP (3 queues)  ┌────────────────┐
+ │ layer2 bench │ ───────────────────────► │ Redis        │ ◄───────────────── │ rust OR ts     │
+ │ (bun)        │ ◄─────────────────────── │ (Docker)     │ ───────────────►   │ engine         │
+ └──────────────┘  RPOP/BRPOP              └──────────────┘  LPUSH response-   └────────────────┘
+                   response-queue-{id}                       queue-{backend},
+                                                             settlement-queue,
+                                                             matching-to-risk-pub-queue
 ```
 
-Run **one engine at a time**. Both consume `incoming-request`; running both would split the traffic. Use the same Upstash database, the same region and the same instance types for every run.
+Run **one engine at a time**. Both consume `incoming-request`; running both would split the traffic. Use the same Redis container, the same instance and the same configuration for every run. The load generator, engine and Redis share one EC2 instance, so they compete for its 4 threads.
 
 ## Equivalent engine behaviour (what makes the comparison valid)
 
@@ -39,7 +39,7 @@ The parity table in every comparison report checks this empirically: statuses, f
 
 | Rule | How it is enforced |
 |---|---|
-| Same database | One `REDIS_URL` in `.env` on both hosts |
+| Same database | One `REDIS_URL` in `.env` |
 | Persistent connections | Harness opens 3 connections once (sender, receiver, control) and reuses them. Engines keep their own long-lived connections. |
 | Identical commands | Both engines receive the byte-identical JSON on `incoming-request`. The harness only uses `LPUSH`, `RPOP count`, `BRPOP`, `LLEN`, `PING`. |
 | Identical workload | Deterministic, no randomness, same order of requests |
@@ -98,9 +98,9 @@ Percentile subtraction is approximate. The raw end-to-end percentiles are the pr
 
 ## Things that affect the numbers (read before publishing)
 
-- **Network distance.** Put the load generator, engine host and Upstash in the same region (ideally the same AZ). Redis round trips dominate at these scales, so over Redis the Layer 1 gap shrinks. That is expected, not a contradiction.
+- **Network distance.** Load generator, engine and Redis (Docker) run on the same EC2 instance, so round trips are local and cheap; they still dominate at these scales, so over Redis the Layer 1 gap shrinks. That is expected, not a contradiction.
 - **Seeding cost.** Seeding goes through the engine. The TS engine sorts the whole opposite book on every `createOrder`, so seeding `n` per side costs roughly `O(n^2 log n)`: fine at 1k and 10k, impractical at 100k (`deep` profile, use only with patience).
-- **Upstash limits.** Each order costs about 4 to 8 Redis commands, restore requests add more. Check your plan's commands/second and daily quota before `full` (up to 1600 req/s). Lower the `rates` in `config/layer2.json` if needed.
+- **Shared host.** Bench, engine and Redis share CPU. Pin processes (`ENGINE_CPU`) if you need less noise. Each order costs about 4 to 8 Redis commands, restore requests add more.
 - **Side-effect queues.** Both engines write `settlement-queue` and `matching-to-risk-pub-queue` with no consumer. `make layer2-clean` removes them. Their lengths are used for the parity check, so the check works with leftovers from earlier runs.
 - **Engine startup.** Restart the engine before each run so every book starts empty.
 - **Engine CPU** is not visible from the load generator. If you need it, sample the engine host (`pidstat -p <pid> 1`).
